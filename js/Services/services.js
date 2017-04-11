@@ -25,6 +25,25 @@
                     console.log(data);
                     return data;
                 },
+
+                checkData: (allData) => {
+                    data.forEach(item => {
+                        if (item.id === allData.id){
+                            item.isChecked = !item.isChecked
+                        }
+                    })
+                    return data;
+                },
+
+                deleteData: (delData) => {
+                    data.forEach((item, index) => {
+                        if (item.id === delData.id){
+                            data.splice(index, 1);
+                        }
+                    })
+                    return data;
+                }
             }
+
         })
 })();

@@ -30,10 +30,10 @@
             <!-- example of existing item (incomplete -->
             <li>
                 <article>
-                    <button class='check'></button>
+                    <button ng-click="vm.checkItem(data)" class='check'></button>
                     <p>{{data.name}}</p>
                     <input type='text' class='edit-todo' value='learn html'>
-                    <button class='delete'>X</button>
+                    <button ng-click="vm.deleteItem(data)" class='delete'>X</button>
                 </article>
             </li>
            
