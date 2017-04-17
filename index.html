@@ -14,7 +14,7 @@
     <link rel='stylesheet' type='text/css' href='css/main.css'>
 </head>
 
-<body ng-controller='HeaderController as vm'>
+<body ng-controller='TableController as vm'>
     <header>
         <h1>todos</h1>
     </header>
@@ -23,7 +23,7 @@
     
     
     <main>
-        <form ng-submit='vm.pushTodo()'>
+        <form ng-submit='vm.pushTodo($event)'>
             <input type='text' class='new-todo' ng-model="vm.item" placeholder='What needs to be done?'>
         </form>
         <ul class='items'>

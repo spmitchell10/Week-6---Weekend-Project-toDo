@@ -3,11 +3,13 @@
 
     angular
         .module('todo')
-        .controller('tableController', function(api) {
+        .controller('TableController', function(api) {
             const vm = this;
             
             vm.list = api.getData();
-            vm.pushTodo = function() {
+            vm.pushTodo = function(event) {
+                    console.log(event);
+                    event.preventDefault();
                     var todoList = new todo(vm.item);
                     console.log(todoList);
                     vm.list = api.pushTodo(todoList)
