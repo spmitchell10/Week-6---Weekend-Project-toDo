@@ -3,24 +3,39 @@
 
     angular
         .module('todo')
-        .controller('HeaderController', function(API) {
-
+        .controller('tableController', function(api) {
             const vm = this;
-            vm.items = API.getData();
             
+            vm.list = api.getData();
+            vm.pushTodo = function() {
+                    var todoList = new todo(vm.item);
+                    console.log(todoList);
+                    vm.list = api.pushTodo(todoList)
+                }
+                
+            function todo(i) {
+                this.name = i;
+                this.status = false;
+                this.id = Date.now();
+            }
 
-            vm.checkItem = function(data) {
-                console.log(data);
-                vm.items = API.checkData(data);
+            
+            vm.delete = function(item) {
+                    vm.list = api.deleteItem(item);
+                }
+                
+            vm.check = function(item) {
+                vm.list = api.completedItem(item);
             }
-            vm.deleteItem = function(data) {
-                console.log(data);
-                vm.items = API.deleteData(data);
+
+            vm.active = function() {
+                vm.list = api.displayActive();
             }
-            vm.submitForm = function() {
-                    let todo = {name:vm.item,id:Date.now(),isChecked:false};
-                    vm.items = API.saveData(todo);
-                    vm.item = "";
+            vm.complete = function() {
+                vm.list = api.displayComplete();
+            }
+            vm.all = function() {
+                vm.list = api.displayAll();
             }
 
         });

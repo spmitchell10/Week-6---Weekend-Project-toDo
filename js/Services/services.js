@@ -3,47 +3,69 @@
 
     angular
         .module('todo')
-        .factory('API', function($http) {
+        .factory('api', function($http) {
 
-            let data = [];
+            var list = [];
+
 
             return {
-                getData: () => {
-                    if(localStorage.getItem('item')) {
-                        // Parse takes the string (stringify) and converts it back into an object
-                        data = JSON.parse(localStorage.getItem('item'));
-                        // This returns the object 
-                        return JSON.parse(localStorage.getItem('item'));
+                
+                getData: function() {
+                    if (localStorage.getItem('todos')) {
+                        list = JSON.parse(localStorage.getItem('todos'));
+                        return JSON.parse(localStorage.getItem('todos'));
                     }
-                    return data;
+                    return list;
                 },
-
-                saveData: (item) => {
-                    data.push(item);
-                    // This pushes the data that you entered into local storage and makes it a string
-                    localStorage.setItem('item', JSON.stringify(data));
-                    console.log(data);
-                    return data;
+                pushTodo: function(items) {
+                    list.push(items);
+                    localStorage.setItem('todos', JSON.stringify(list)); 
+                    return list;
                 },
-
-                checkData: (allData) => {
-                    data.forEach(item => {
-                        if (item.id === allData.id){
-                            item.isChecked = !item.isChecked
+                
+                deleteItem: function(item) {
+                    list.forEach(function(i, idx) {
+                        if (i.id === item.id) {
+                            list.splice(idx, 1);
                         }
                     })
-                    return data;
+                    localStorage.setItem('todos', JSON.stringify(list));
+                    return list
                 },
-
-                deleteData: (delData) => {
-                    data.forEach((item, index) => {
-                        if (item.id === delData.id){
-                            data.splice(index, 1);
+                completedItem: function(item) {
+                    list.forEach(function(i) {
+                        if (i.id === item.id) {
+                            if (i.status === false) {
+                                i.status = true;
+                            } else {
+                                i.status = false;
+                            }
                         }
                     })
-                    return data;
-                }
-            }
+                    localStorage.setItem('todos', JSON.stringify(list));
+                    return list;
+                },
+                displayActive: function(item) {
+                    var activeList = list.filter(function(i) {
+                        if (i.status === false) {
+                            return i;
+                        }
+                    })
+                    return activeList;
+                },
+                displayComplete: function(item) {
+                    var completeList = list.filter(function(i) {
+                        if (i.status === true) {
+                            return i;
+                        }
+                    })
+                    return completeList
+                },
+                displayAll: function(item) {
+                    return list;
+                },
 
-        })
+            };
+        });
+
 })();

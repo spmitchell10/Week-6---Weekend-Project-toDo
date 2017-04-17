@@ -10,7 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="node_modules/sweetalert/dist/sweetalert.css">
+    
     <link rel='stylesheet' type='text/css' href='css/main.css'>
 </head>
 
@@ -20,46 +20,33 @@
     </header>
     
     
-    <!-- Button trigger modal -->
+    
     
     <main>
-        <form ng-submit="vm.submitForm()" >
-            <input ng-model='vm.item' type='text' class='new-todo' placeholder='What needs to be done?'>
+        <form ng-submit='vm.pushTodo()'>
+            <input type='text' class='new-todo' ng-model="vm.item" placeholder='What needs to be done?'>
         </form>
-        <ul ng-repeat="data in vm.items track by $index" class='items'>
-            <!-- example of existing item (incomplete -->
-            <li>
-                <article>
-                    <button ng-click="vm.checkItem(data)" class='check'></button>
-                    <p>{{data.name}}</p>
-                    <input type='text' class='edit-todo' value='learn html'>
-                    <button ng-click="vm.deleteItem(data)" class='delete'>X</button>
+        <ul class='items'>
+            <li ng-repeat="item in vm.list">
+                <article ng-class="{'completed':item.status}">
+                    <button ng-click="vm.check(item)" class='check'></button>
+                    <p>{{item.name}}</p>
+                    <button ng-click="vm.delete(item)" class='delete'>X</button>
                 </article>
             </li>
-           
-            <!-- example of completed item
-            <li>
-                <article class='completed'>
-                    <button class='check'></button>
-                    <p class='complete'>learn css</p>
-                    <input type='text' class='edit-todo' value='learn css'>
-                    <button class='delete'>X</button>
-                </article>
-            </li>
-            -->
         </ul>
         <footer>
             <p class='remaining'><span class='incomplete-items'>0</span> items left</p>
             <nav>
                 <ul>
                     <li>
-                        <button class='show-all active'>All</button>
+                        <button ng-click='vm.all()' class='show-all active'>All</button>
                     </li>
                     <li>
-                        <button class='show-active'>Active</button>
+                        <button ng-click='vm.active()' class='show-active'>Active</button>
                     </li>
                     <li>
-                        <button class='show-completed'>Completed</button>
+                        <button ng-click='vm.complete()' class='show-completed'>Completed</button>
                     </li>
                 </ul>
             </nav>
